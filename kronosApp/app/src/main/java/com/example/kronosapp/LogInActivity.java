@@ -34,10 +34,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LogInActivity extends AppCompatActivity {
 
-    private static final String TAG = "GoogleActivity";
+    private static final String TAG = "GoogleLogInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private Button logInButton;
@@ -46,6 +48,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private DatabaseReference mDbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +133,7 @@ public class LogInActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if(user != null){
             Toast.makeText(LogInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            addUserToDatabase(user.getEmail(), user.getUid());
             startActivity(new Intent(LogInActivity.this, MainActivity.class));
         }else{
             Toast.makeText(LogInActivity.this, "Error!", Toast.LENGTH_SHORT).show();
@@ -152,6 +156,7 @@ public class LogInActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(LogInActivity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
+                        finish();
                         startActivity(new Intent(LogInActivity.this, MainActivity.class));
                     }
                     else{
@@ -160,5 +165,11 @@ public class LogInActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void addUserToDatabase(String email, String uid){
+        mDbRef = FirebaseDatabase.getInstance("https://kronos-app-tues-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+
+        mDbRef.child("user").child(uid).setValue(new User(email, uid));
     }
 }
