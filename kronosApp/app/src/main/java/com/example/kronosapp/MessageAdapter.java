@@ -10,6 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -20,9 +25,33 @@ class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int ITEM_RECEIVE = 1;
     private int ITEM_SENT = 2;
 
+    DatabaseReference db = FirebaseDatabase.getInstance("https://kronos-app-tues-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+    ArrayList<User> userList;
+
     public MessageAdapter (Context context, ArrayList<Message> messageList){
         this.context = context;
         this.messageList = messageList;
+
+        userList = new ArrayList<>();
+        db.child("user").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userList.clear();
+                for(DataSnapshot postSnapshot : snapshot.getChildren()){
+                    User currentUser = postSnapshot.getValue(User.class);
+//                    assert currentUser != null;
+//                    if(!Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(currentUser.getUid())){
+                    userList.add(currentUser);
+//                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @NonNull
@@ -53,6 +82,17 @@ class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         else{
             RecyclerView.ViewHolder viewHolder = (ReceiveViewHolder)holder;
             ((ReceiveViewHolder) holder).receiveMessage.setText(currentMessage.getMessage());
+
+            //find user from id
+
+
+            for(User u : userList){
+                if(u.getUid().equals(currentMessage.getSenderId())){
+                    ((ReceiveViewHolder) holder).receiveMessageName.setText(u.getName());
+                }
+            }
+
+//            ((ReceiveViewHolder) holder).receiveMessageName.setText(currentMessage.getSenderId());
         }
     }
 
@@ -84,9 +124,11 @@ class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class ReceiveViewHolder extends RecyclerView.ViewHolder{
         public TextView receiveMessage;
+        public TextView receiveMessageName;
         public ReceiveViewHolder(@NonNull View itemView) {
             super(itemView);
             receiveMessage = itemView.findViewById(R.id.txt_receive_message);
+            receiveMessageName = itemView.findViewById(R.id.txt_receive_message_name);
         }
     }
 }
