@@ -133,7 +133,7 @@ public class LogInActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if(user != null){
             Toast.makeText(LogInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-            addUserToDatabase(user.getEmail(), user.getUid());
+            addUserToDatabase(user.getDisplayName(), user.getEmail(), user.getUid());
             startActivity(new Intent(LogInActivity.this, MainActivity.class));
         }else{
             Toast.makeText(LogInActivity.this, "Error!", Toast.LENGTH_SHORT).show();
@@ -167,9 +167,9 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    private void addUserToDatabase(String email, String uid){
+    private void addUserToDatabase(String name, String email, String uid){
         mDbRef = FirebaseDatabase.getInstance("https://kronos-app-tues-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
-        mDbRef.child("user").child(uid).setValue(new User(email, uid));
+        mDbRef.child("user").child(uid).setValue(new User(name, email, uid));
     }
 }

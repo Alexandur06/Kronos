@@ -34,14 +34,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User currentUser = userList.get(position);
 
-        holder.textName.setText(currentUser.getEmail());
+        holder.textName.setText(currentUser.getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, GroupChatActivity.class);
 
-                intent.putExtra("groupName", currentUser.getEmail());
+                intent.putExtra("groupName", currentUser.getName());
                 intent.putExtra("uid", currentUser.getUid());
 
                 context.startActivity(intent);

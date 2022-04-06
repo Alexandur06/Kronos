@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private Button signUpButton, logInButton;
     private SignInButton googleButton;
-    private EditText inpEmail, inpPassword;
+    private EditText inpName, inpEmail, inpPassword;
 
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -50,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUp);
         googleButton = findViewById(R.id.googleSignUp);
         logInButton = findViewById(R.id.button2);
+        inpName = findViewById(R.id.editTextTextName);
         inpEmail = findViewById(R.id.editTextTextEmailAddress);
         inpPassword = findViewById(R.id.editTextTextPassword);
 
@@ -133,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if(user != null){
             Toast.makeText(SignUpActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-            addUserToDatabase(user.getEmail(), user.getUid());
+            addUserToDatabase(user.getDisplayName(), user.getEmail(), user.getUid());
             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
         }else{
             Toast.makeText(SignUpActivity.this, "Error!", Toast.LENGTH_SHORT).show();
@@ -141,6 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void createUser() {
+        String name = inpName.getText().toString();
         String email = inpEmail.getText().toString();
         String password = inpPassword.getText().toString();
 
@@ -150,13 +152,16 @@ public class SignUpActivity extends AppCompatActivity {
         }else if(TextUtils.isEmpty(password)){
             inpPassword.setError("Please fill the password");
             inpPassword.requestFocus();
+        }else if(TextUtils.isEmpty(name)){
+            inpName.setError("Please fill the name");
+            inpName.requestFocus();
         }else{
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(SignUpActivity.this, "User signed up successfully", Toast.LENGTH_SHORT).show();
-                        addUserToDatabase(email, mAuth.getCurrentUser().getUid());
+                        addUserToDatabase(name, email, mAuth.getCurrentUser().getUid());
                         startActivity(new Intent(SignUpActivity.this, LogInActivity.class));
                     }else{
                         Toast.makeText(SignUpActivity.this, "Sign up error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -166,10 +171,10 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void addUserToDatabase(String email, String uid){
+    private void addUserToDatabase(String name, String email, String uid){
         mDbRef = FirebaseDatabase.getInstance("https://kronos-app-tues-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
-        mDbRef.child("user").child(uid).setValue(new User(email, uid));
+        mDbRef.child("user").child(uid).setValue(new User(name, email, uid));
     }
 
     public void openMainActivity() {
