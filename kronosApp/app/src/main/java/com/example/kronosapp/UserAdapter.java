@@ -1,6 +1,7 @@
 package com.example.kronosapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -24,17 +27,26 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false);
-        System.out.println("##########################");
         return new UserViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User currentUser = userList.get(position);
-        System.out.println("##########################");
-        System.out.println("set text");
+
         holder.textName.setText(currentUser.getEmail());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GroupChatActivity.class);
+
+                intent.putExtra("groupName", currentUser.getEmail());
+                intent.putExtra("uid", currentUser.getUid());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -48,7 +60,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = (TextView)itemView.findViewById(R.id.txt_name);
-            System.out.println("##########################");
         }
     }
 

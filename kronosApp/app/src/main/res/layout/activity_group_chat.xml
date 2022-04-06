@@ -30,7 +30,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="15"
-            android:text="->"/>
+            android:text="s"/>
 
     </LinearLayout>
 
@@ -59,10 +59,11 @@
             android:layout_weight="85"/>
 
         <Button
+            android:id="@+id/sentButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="15"
-            android:text="<-"/>
+            android:text="s"/>
 
     </LinearLayout>
 
