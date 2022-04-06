@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 
@@ -55,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 userList.clear();
                 for(DataSnapshot postSnapshot : snapshot.getChildren()){
                     User currentUser = postSnapshot.getValue(User.class);
-                    if(mAuth.getCurrentUser().getUid() != currentUser.getUid()){
-                        userList.add(currentUser);
-                    }
+//                    assert currentUser != null;
+//                    if(!Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(currentUser.getUid())){
+                    userList.add(currentUser);
+//                    }
                 }
                 adapter.notifyDataSetChanged();
             }
