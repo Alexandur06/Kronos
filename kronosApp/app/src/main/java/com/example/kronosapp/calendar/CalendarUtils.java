@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,10 +17,26 @@ public class CalendarUtils
         return date.format(formatter);
     }
 
+    public static LocalDate formattedStringToDate(String date)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        LocalDate oDate = LocalDate.parse(date, formatter);
+        System.out.println(oDate);
+        return oDate;
+    }
+
     public static String formattedTime(LocalTime time)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
         return time.format(formatter);
+    }
+
+    public static LocalTime formattedStringToTime(String time)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+        LocalTime oTime = LocalTime.parse(time, formatter);
+        System.out.println(oTime);
+        return oTime;
     }
 
     public static String formattedShortTime(LocalTime time)

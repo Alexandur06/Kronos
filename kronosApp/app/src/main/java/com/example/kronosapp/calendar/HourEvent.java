@@ -1,4 +1,6 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
+
+import com.example.kronosapp.calendar.Event;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -7,6 +9,8 @@ class HourEvent
 {
     LocalTime time;
     ArrayList<Event> events;
+
+    public HourEvent(){}
 
     public HourEvent(LocalTime time, ArrayList<Event> events)
     {

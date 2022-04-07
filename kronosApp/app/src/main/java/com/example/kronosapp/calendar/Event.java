@@ -1,10 +1,31 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Event
 {
+    private String name = null;
+    private LocalDate date = null;
+    private LocalTime time = null;
+
+    public Event(){}
+
+    public Event(String name, String date, String time)
+    {
+        this.name = name;
+        this.date = CalendarUtils.formattedStringToDate(date);
+        this.time = CalendarUtils.formattedStringToTime(time);
+    }
+
+    public Event(String name, LocalDate date, LocalTime time)
+    {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+    }
+
+
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
     public static ArrayList<Event> eventsForDate(LocalDate date)
@@ -13,7 +34,7 @@ public class Event
 
         for(Event event : eventsList)
         {
-            if(event.getDate().equals(date))
+            if(event.getLocalDateDate().equals(date))
                 events.add(event);
         }
 
@@ -28,23 +49,11 @@ public class Event
         {
             int eventHour = event.time.getHour();
             int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour)
+            if(event.getLocalDateDate().equals(date) && eventHour == cellHour)
                 events.add(event);
         }
 
         return events;
-    }
-
-
-    private String name;
-    private LocalDate date;
-    private LocalTime time;
-
-    public Event(String name, LocalDate date, LocalTime time)
-    {
-        this.name = name;
-        this.date = date;
-        this.time = time;
     }
 
     public String getName()
@@ -52,24 +61,28 @@ public class Event
         return name;
     }
 
+    public String getDate(){return  CalendarUtils.formattedDate(date);}
+
+    public String getTime(){return CalendarUtils.formattedTime(time);}
+
+    public LocalDate getLocalDateDate()
+    {
+        return date;
+    }
+
+    public LocalTime getLocalDateTime()
+    {
+        return time;
+    }
+
     public void setName(String name)
     {
         this.name = name;
     }
 
-    public LocalDate getDate()
-    {
-        return date;
-    }
-
     public void setDate(LocalDate date)
     {
         this.date = date;
-    }
-
-    public LocalTime getTime()
-    {
-        return time;
     }
 
     public void setTime(LocalTime time)

@@ -1,6 +1,6 @@
-package com.example.kronosapp;
-import static com.example.kronosapp.CalendarUtils.daysInMonthArray;
-import static com.example.kronosapp.CalendarUtils.monthYearFromDate;
+package com.example.kronosapp.calendar;
+import static com.example.kronosapp.calendar.CalendarUtils.daysInMonthArray;
+import static com.example.kronosapp.calendar.CalendarUtils.monthYearFromDate;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -10,11 +10,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.kronosapp.R;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 

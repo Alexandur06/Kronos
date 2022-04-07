@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 
 
 import android.content.Context;
@@ -11,12 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.kronosapp.R;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HourAdapter extends ArrayAdapter<HourEvent>
 {
+
     public HourAdapter(@NonNull Context context, List<HourEvent> hourEvents)
     {
         super(context, 0, hourEvents);

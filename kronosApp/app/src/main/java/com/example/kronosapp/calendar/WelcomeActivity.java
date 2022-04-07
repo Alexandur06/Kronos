@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.QuickContactBadge;
+
+import com.example.kronosapp.LogInActivity;
+import com.example.kronosapp.R;
+import com.example.kronosapp.SignUpActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 

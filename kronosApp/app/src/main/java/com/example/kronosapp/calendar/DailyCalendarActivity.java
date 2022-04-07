@@ -1,10 +1,9 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 
-import static com.example.kronosapp.CalendarUtils.selectedDate;
+import static com.example.kronosapp.calendar.CalendarUtils.selectedDate;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +11,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.kronosapp.calendar.HourEvent;
+import com.example.kronosapp.R;
+
 import java.time.LocalTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class DailyCalendarActivity extends AppCompatActivity

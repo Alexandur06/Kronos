@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.private_chat;
 
 public class User {
     private String name;
@@ -23,5 +23,9 @@ public class User {
 
     public String getUid(){
         return uid;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

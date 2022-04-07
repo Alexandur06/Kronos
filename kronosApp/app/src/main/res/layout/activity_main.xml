@@ -12,8 +12,8 @@
         android:id="@+id/conv"
         android:layout_width="230dp"
         android:layout_height="45dp"
-        android:layout_marginLeft="85dp"
-
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:background="@drawable/edit_background"
         android:backgroundTint="@color/rose_red"
         android:text="Conversations: "
@@ -36,7 +36,7 @@
             android:id="@+id/groupConv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Group: "
+            android:text="Groups: "
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -54,8 +54,9 @@
 
 <!--    private conv-->
     <RelativeLayout
+        android:id="@+id/privateConvHeader"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="350dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +82,21 @@
             tools:listitem="@layout/user_layout" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/addFr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/privateConvHeader"
+        android:text="Add a friend: "
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:background="@drawable/edit_background"
+        android:backgroundTint="@color/rose_red"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"/>
 
 
 

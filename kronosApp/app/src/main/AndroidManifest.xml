@@ -11,10 +11,10 @@
         android:supportsRtl="true">
 <!--        android:theme="@style/Theme.KronosApp" >-->
         <activity
-            android:name=".EventEditActivity">
+            android:name=".calendar.EventEditActivity">
         </activity>
         <activity
-            android:name=".DailyCalendarActivity"
+            android:name=".calendar.DailyCalendarActivity"
             android:exported="true" />
         <activity
             android:name=".LogInActivity"
@@ -23,19 +23,22 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".WeekViewActivity"
+            android:name=".calendar.WeekViewActivity"
             android:exported="true" />
         <activity
-            android:name=".GroupChatActivity"
+            android:name=".private_chat.PrivateChatActivity"
             android:exported="true" />
         <activity
-            android:name=".CalendarActivity"
+            android:name=".group_chat.GroupChatActivity"
+            android:exported="true" />
+        <activity
+            android:name=".calendar.CalendarActivity"
             android:exported="true" />
         <activity
             android:name=".SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".calendar.WelcomeActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

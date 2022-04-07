@@ -7,9 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
+import com.example.kronosapp.calendar.WelcomeActivity;
+import com.example.kronosapp.group_chat.Group;
+import com.example.kronosapp.group_chat.GroupAdapter;
+import com.example.kronosapp.group_chat.GroupChatActivity;
+import com.example.kronosapp.private_chat.User;
+import com.example.kronosapp.private_chat.UserAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,9 +30,13 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView groupRecyclerView;
+    private ArrayList<Group> groupList;
+    private GroupAdapter groupAdapter;
+
     private RecyclerView userRecyclerView;
     private ArrayList<User> userList;
-    private UserAdapter adapter;
+    private UserAdapter userAdapter;
 
     private Button changeToGroupChat;
 
@@ -42,13 +51,37 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDbRef = FirebaseDatabase.getInstance("https://kronos-app-tues-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
+        groupList = new ArrayList();
+        groupAdapter = new GroupAdapter(this, groupList);
+
+        groupRecyclerView = findViewById(R.id.groupRecyclerView);
+        groupRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        groupRecyclerView.setAdapter(groupAdapter);
+
+        mDbRef.child("groups").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                groupList.clear();
+                for(DataSnapshot postSnapshot : snapshot.getChildren()){
+                    Group currentUser = postSnapshot.getValue(Group.class);
+                    assert currentUser != null;
+                    if(Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(currentUser.getUid())){
+                        currentUser.setName("To myself");
+                    }
+                    groupList.add(currentUser);
+                }
+                groupAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
         userList = new ArrayList();
-        adapter = new UserAdapter(this, userList);
+        userAdapter = new UserAdapter(this, userList);
 
         userRecyclerView = findViewById(R.id.userRecyclerView);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userRecyclerView.setAdapter(adapter);
+        userRecyclerView.setAdapter(userAdapter);
 
         mDbRef.child("user").addValueEventListener(new ValueEventListener() {
             @Override
@@ -56,18 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 userList.clear();
                 for(DataSnapshot postSnapshot : snapshot.getChildren()){
                     User currentUser = postSnapshot.getValue(User.class);
-//                    assert currentUser != null;
-//                    if(!Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(currentUser.getUid())){
+                    assert currentUser != null;
+                    if(Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(currentUser.getUid())){
+                        currentUser.setName("To myself");
+                    }
                     userList.add(currentUser);
-//                    }
                 }
-                adapter.notifyDataSetChanged();
+                userAdapter.notifyDataSetChanged();
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 

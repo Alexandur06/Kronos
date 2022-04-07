@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.group_chat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.kronosapp.R;
+import com.example.kronosapp.calendar.CalendarActivity;
+import com.example.kronosapp.private_chat.Message;
+import com.example.kronosapp.private_chat.MessageAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,12 +107,12 @@ public class GroupChatActivity extends AppCompatActivity {
            public void onClick(View view) {
                 String message = messageBox.getText().toString();
                 Message messageObject = new Message(message, senderUid);
-                System.out.println("sent!##############################");
+
+                scanMessageForCommand(message);
 
                 mDbRef.child("chats").child(senderRoom).child("messages").push().setValue(messageObject).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        System.out.println("success sent!##############################");
                         mDbRef.child("chats").child(receiverRoom).child("messages").push().setValue(messageObject);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -120,6 +124,10 @@ public class GroupChatActivity extends AppCompatActivity {
                 messageBox.setText("");
            }
        });
+    }
+
+    private void scanMessageForCommand(String message) {
+
     }
 
     public void openCalendarActivity() {

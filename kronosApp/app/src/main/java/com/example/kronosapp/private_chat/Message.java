@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.private_chat;
 
 public class Message {
     private String message = null;

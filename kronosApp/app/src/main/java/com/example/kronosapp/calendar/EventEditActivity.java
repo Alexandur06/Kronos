@@ -1,4 +1,4 @@
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -8,14 +8,18 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.os.IResultReceiver;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.kronosapp.calendar.HourEvent;
+import com.example.kronosapp.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class EventEditActivity extends AppCompatActivity
 {
@@ -25,6 +29,9 @@ public class EventEditActivity extends AppCompatActivity
     private EditText eventTimeET;
 
     private LocalTime time;
+
+    DatabaseReference db = FirebaseDatabase.getInstance("https://kronos-app-tues-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+    ArrayList<HourEvent> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,6 +52,27 @@ public class EventEditActivity extends AppCompatActivity
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+
+        //firebase listeners
+//        eventList = new ArrayList<>();
+//        db.child("calendars").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                eventList.clear();
+//                for(DataSnapshot postSnapshot : snapshot.getChildren()){
+//                    HourEvent currentEvent = postSnapshot.getValue(HourEvent.class);
+////                    assert currentUser != null;
+////                    if(!Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(currentUser.getUid())){
+//                    eventList.add(currentEvent);
+////                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
 
@@ -57,18 +85,20 @@ public class EventEditActivity extends AppCompatActivity
 
     public void saveEventAction(View view)
     {
+//        String eventName = eventNameET.getText().toString();
+//        String eventTime = eventTimeET.getText().toString();
+//        time = LocalTime.parse(eventTime);
+//        Event newEvent = new Event(eventName, CalendarUtils.selectedDate, time);
+//        Event.eventsList.add(newEvent);
 
         //save to FireBase//save to FireBase
+//        db.child("calendars").child("calendar-1").setValue(newEvent);
+//        db.child("calendars").child("calendar-1").setValue(new User(eventName, CalendarUtils.formattedDate(CalendarUtils.selectedDate), CalendarUtils.formattedTime(LocalTime.parse(eventTime))));
         //save to FireBase//save to FireBase
 
-        String eventName = eventNameET.getText().toString();
-        String eventTime = eventTimeET.getText().toString();
-        time = LocalTime.parse(eventTime);
-        Event newEvent = new Event(eventName, CalendarUtils.selectedDate, time);
-        Event.eventsList.add(newEvent);
         finish();
 
-        notificationSend(eventName, CalendarUtils.selectedDate, time);
+//        notificationSend(eventName, CalendarUtils.selectedDate, time);
     }
 
     public void notificationSend(String eventName, LocalDate selectedDate, LocalTime time){

@@ -1,5 +1,5 @@
 
-package com.example.kronosapp;
+package com.example.kronosapp.calendar;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.kronosapp.R;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class EventAdapter extends ArrayAdapter<Event>
 
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
 
-        String eventTitle = event.getName() +" "+ CalendarUtils.formattedTime(event.getTime());
+        String eventTitle = event.getName() +" "+ CalendarUtils.formattedTime(event.getLocalDateTime());
         eventCellTV.setText(eventTitle);
         return convertView;
     }
