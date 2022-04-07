@@ -14,11 +14,13 @@
             android:id="@+id/txt_sent_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is sent message"
             android:padding="10dp"
-            android:textColor="@color/grey"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:text="This is sent message"
+            android:textColor="@color/white"
+            android:background="@drawable/edit_background"
+            android:backgroundTint="@color/rose_red"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

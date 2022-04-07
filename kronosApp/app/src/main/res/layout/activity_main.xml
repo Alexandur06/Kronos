@@ -7,15 +7,20 @@
     tools:context=".MainActivity">
 
 <!--    header -->
+
     <TextView
         android:id="@+id/conv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="85dp"
+
+        android:background="@drawable/edit_background"
+        android:backgroundTint="@color/rose_red"
         android:text="Conversations: "
-        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:textAlignment="center"/>
+        android:textStyle="bold" />
 
 <!--    group conv-->
     <RelativeLayout
@@ -71,9 +76,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/privateConv"
+            android:textAlignment="center"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/user_layout" />
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>
